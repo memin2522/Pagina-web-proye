@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Basic Three.js App</title>
+  <style>
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="./controls/OrbitControls.js"></script>
+</head>
+
+
+<header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <a class="navbar-brand text-light" href="#" style="width: 250px">Ejemplo Esferas</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+       
+       <li class="nav-item dropdown text-light" style="width: 150px">
+        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+          Ejemplos
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="../RV_Memo/examples/webgl_effects_stereo.html">Ejemplo Vista Burbujas</a>
+          <a class="dropdown-item" href="../RV_Memo/examples/webgl_loader_obj.html">Ejemplo Modelo Persona</a>
+          <a class="dropdown-item" href="../RV_Memo/examples/webgl_materials_cubemap.html">Ejemplo Caras</a>
+          <a class="dropdown-item" href="../RV_Memo/examples/webgl_materials_cubemap_mipmaps.html">Ejemplo Esferas</a>
+          <a class="dropdown-item" href="../RV_Memo/examples/webgl_loader_obj_mtl.html">Ejemplo Modelo Vestido</a>
+        </div>
+      </li>
+
+       <li class="nav-item dropdown text-light" style="width: 150px">
+        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ejercicios
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="parcial.html">Parcial Sistema Solar</a>
+          <a class="dropdown-item" href="../RV_Memo/examples/Effects_Model.html">Vista + Modelo</a>
+          <a class="dropdown-item" href="../RV_Memo/examples/webgl_effects_stereo_rotacion.html">Effects 360</a>
+          <a class="dropdown-item" href="Piramide.html">Piramide</a>
+          
+          
+        </div>
+      </li>
+
+       <li class="nav-item dropdown text-light" style="width: 150px">
+        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Videos
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="../videos/jamcam.html">JamCam 2020</a>
+          
+          
+        </div>
+      </li>
+    
+    </div>
+  </div>
+</nav>
+	</header>
+
+
+
+
+
+<body>
+ <script>
+var scene = new THREE.Scene();
+var aspect = window.innerWidth / window.innerHeight;
+var camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
+
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+
+cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
+cameraControls.target.set( 0, 0, 0 );
+cameraControls.update();
+
+
+var geometry1 = new THREE.BoxGeometry( 0.05, 0.05, 0.05 );
+var material1 = new THREE.MeshNormalMaterial();
+var cube1 = new THREE.Mesh( geometry1, material1 );
+scene.add( cube1 );
+cube1.position.x = 0;
+cube1.position.y = 2;
+
+
+
+
+var geometry2 = new THREE.BoxGeometry( 0.05, 0.05, 0.05 );
+var material2 = new THREE.MeshNormalMaterial();
+var cube2 = new THREE.Mesh( geometry2, material2 );
+scene.add( cube2 );
+cube2.position.x = 4;
+cube2.position.y = -2;
+
+camera.position.z = 5;
+
+var geometry3 = new THREE.BoxGeometry( 0.05, 0.05, 0.05 );
+var material3 = new THREE.MeshNormalMaterial();
+var cube3 = new THREE.Mesh( geometry3, material3 );
+scene.add( cube3 );
+cube3.position.x = -4;
+cube3.position.y = -2;
+
+var geometry6 = new THREE.BoxGeometry( 0.05, 0.05, 0.05 );
+var material6 = new THREE.MeshNormalMaterial();
+var cube6 = new THREE.Mesh( geometry6, material6 );
+scene.add( cube6 );
+cube6.position.x = 0;
+cube6.position.y = -2;
+cube6.position.z = -4;
+
+var geometry7 = new THREE.BoxGeometry( 0.05, 0.05, 0.05 );
+var material7 = new THREE.MeshNormalMaterial();
+var cube7 = new THREE.Mesh( geometry7, material7 );
+scene.add( cube7);
+cube7.position.x = 0;
+cube7.position.y = -2;
+cube7.position.z = 4;
+
+var x=0;
+var y=0;
+var z=0;
+
+
+var geometry4 = new THREE.BoxGeometry( 0.05, 0.05, 0.05 );
+   var material4 = new THREE.MeshNormalMaterial();
+   var cube4 = new THREE.Mesh( geometry4, material4 );
+   scene.add( cube4 );
+   cube4.position.x = Math.random();
+   cube4.position.y = Math.random();
+   cube4.position.z = Math.random();
+
+        
+var render = function () {
+  requestAnimationFrame( render );
+  
+     
+
+   for(var i=0; i<5; i++){
+   
+   var point = Math.floor(Math.random()*5);
+   
+   if(point == 0){
+   	var cube5 = new THREE.Mesh( geometry4, material4 );
+	scene.add( cube5 );
+	cube5.position.x= (x+cube1.position.x)/2;
+	x=cube5.position.x  
+	cube5.position.y= (y+cube1.position.y)/2;
+	y=cube5.position.y
+	cube5.position.z= (z+cube1.position.z)/2;
+	z=cube5.position.z  
+	
+
+   }
+    if(point==1){
+   	var cube5 = new THREE.Mesh( geometry4, material4 );
+	scene.add( cube5 );
+	cube5.position.x= (x+cube2.position.x)/2;
+	x=cube5.position.x  
+	cube5.position.y= (y+cube2.position.y)/2;
+	y=cube5.position.y
+	cube5.position.z= (z+cube2.position.z)/2;
+	z=cube5.position.z 
+
+   }
+   if(point ==2){
+   	var cube5 = new THREE.Mesh( geometry4, material4 );
+	scene.add( cube5 );
+	cube5.position.x= (x+cube3.position.x)/2;
+	x=cube5.position.x  
+	cube5.position.y= (y+cube3.position.y)/2;
+	y=cube5.position.y
+	cube5.position.z= (z+cube3.position.z)/2;
+	z=cube5.position.z 
+
+   }
+   if (point==3){
+	var cube5 = new THREE.Mesh( geometry4, material4 );
+	scene.add( cube5 );
+	cube5.position.x= (x+cube6.position.x)/2;
+	x=cube5.position.x  
+	cube5.position.y= (y+cube6.position.y)/2;
+	y=cube5.position.y
+	cube5.position.z= (z+cube6.position.z)/2;
+	z=cube5.position.z 
+  }
+  if (point==4){
+	var cube5 = new THREE.Mesh( geometry4, material4 );
+	scene.add( cube5 );
+	cube5.position.x= (x+cube7.position.x)/2;
+	x=cube5.position.x  
+	cube5.position.y= (y+cube7.position.y)/2;
+	y=cube5.position.y
+	cube5.position.z= (z+cube7.position.z)/2;
+	z=cube5.position.z 
+  }
+}
+  
+
+  renderer.render(scene,camera)
+};
+
+render();
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
