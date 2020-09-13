@@ -1,0 +1,555 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser-ce/2.14.0/phaser.min.js"></script>
+<script>
+    var game = new Phaser.Game(1500, 700, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+
+function preload() {
+
+   
+    game.load.image('bullet', 'bala.png');
+    game.load.image('rocket', 'rocket.png');
+    game.load.spritesheet('bonus', 'MonedaD.png', 16, 16);
+    game.load.spritesheet('personaje', 'sprites.png', 48, 48);
+
+
+    game.load.image('fondo', 'fondo.png');
+    game.load.image('isla', 'isla.png');
+
+    game.load.spritesheet('enemi', 'enemigo.png', 48, 48);
+    game.load.spritesheet('zombi', 'zombie.png', 32, 32);
+
+
+    game.load.tilemap('mapa', 'mundo.csv', null, Phaser.Tilemap.CSV);
+    game.load.image('tiles', 'tileset.png');
+}
+
+var map;
+var layer;
+var player;
+var cursors;
+
+var jumpButton;
+var facing = 'right';  
+var jumpTimer = 0;
+var cursors;
+var jumpButton;
+var shootButton;
+var bg;
+
+var enemyBullet;
+var firingTimer = 0;
+var livingEnemies = [];
+
+var score = 0;
+
+var lives = 3;
+var stateText;
+
+var coins;
+
+var music;  
+
+var zombie;
+var enemigo;
+
+var bulletTime = 0;
+var bullet;
+var bullets;
+
+function create() {
+
+   
+    fondo = game.add.tileSprite(0, 0, 9600, 900, 'fondo');
+   
+    isla = game.add.tileSprite(0, 0, 1433, 332, 'isla');
+
+    isla.position.x = 2500 ;
+    isla.position.y = 500 ;
+    
+   
+    player = game.add.sprite(48, 48, 'personaje');
+    enemy = game.add.sprite(48, 48, 'enemi');
+    bonus = game.add.sprite(16, 16, 'bonus')
+    zombi = game.add.sprite(32, 32, 'zombi')
+   
+
+    game.physics.enable(player, Phaser.Physics.ARCADE);
+   
+
+//tiledmap
+
+    map = game.add.tilemap('mapa', 16, 16);
+    map.addTilesetImage('tiles');
+    layer = map.createLayer(0);
+    layer.resizeWorld();
+    map.setCollisionBetween(698, 729);
+    map.setCollisionBetween(733, 740);
+    map.setCollisionBetween(265, 272);
+    map.setCollisionBetween(194, 204);
+    map.setCollisionBetween(118, 124);
+    map.setCollisionBetween(194, 204);
+    map.setCollisionBetween(467, 469);
+    map.setCollisionBetween(890, 897);
+    map.setCollisionBetween(890, 897);
+
+
+
+//
+
+    player.body.bounce.y = 0.2;
+    player.body.collideWorldBounds = true;
+    player.body.setSize(20, 32, 5, 16);
+    player.body.gravity.y = 200;
+
+    player.position.x = 20;
+    player.position.y= 500;
+
+    // animacion
+   
+    player.animations.add('right', [0, 1, 2, 3, 4, 5], 10, true);
+    player.animations.add('left', [6, 7, 8, 9, 10 ,11], 10, true);
+    player.animations.add('idle', [12, 13, 14, 15, 16], 7, true);
+    player.animations.add('idle2', [18, 19, 20, 21, 22], 7, true);
+    player.animations.add('jump', [24, 25], 10, false);
+    player.animations.add('jump2', [30, 31], 10, false);
+    player.animations.add('jump2', [30, 31], 10, false);
+
+    game.camera.follow(player);
+
+// bonus
+
+    coins = game.add.physicsGroup();
+
+    createMonedas();
+
+// zombie
+
+    zombie = game.add.physicsGroup();
+    zombie.enableBody = true;
+    zombie.physicsBodyType = Phaser.Physics.ARCADE;
+
+    createZombies();
+    
+
+//enemigos
+
+    enemigo = game.add.group();
+    enemigo.enableBody = true;
+    enemigo.physicsBodyType = Phaser.Physics.ARCADE;
+
+    createEnemigos();
+
+    
+
+// Player balas
+
+    bullets = game.add.group();
+    bullets.enableBody = true;
+    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 50; i++)
+    {
+        var b = bullets.create(0, 0, 'bullet');
+        b.name = 'bullet' + i;
+        b.exists = false;
+        b.visible = false;
+        b.checkWorldBounds = true;
+        b.events.onOutOfBounds.add(resetBullet, this);
+    }
+
+ // Enemigos Balas
+
+    enemyBullets = game.add.group();
+    enemyBullets.enableBody = true;
+    enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
+    enemyBullets.createMultiple(30, 'rocket');
+    enemyBullets.setAll('outOfBoundsKill', true);
+    enemyBullets.setAll('checkWorldBounds', true);
+
+    cursors = game.input.keyboard.createCursorKeys();
+    shootButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    // vidas
+
+    lives = game.add.group();
+
+    game.add.text(game.world.width - 100, 10, 'Lives : ', { font: '34px Arial', fill: '#fff' });
+
+    //  Text
+    stateText = game.add.text(game.world.centerX,game.world.centerY,' ', { font: '84px Arial', fill: '#fff' });
+    stateText.anchor.setTo(0.5, 0.5);
+    stateText.visible = false;
+
+    for (var i = 0; i < 3; i++) 
+    {
+        var mainplayer = lives.create(game.world.width - 100 + (30 * i), 60, 'personaje');
+    }
+   
+
+}
+
+
+function update () {
+
+
+//Muerte Caida
+
+    if (player.position.y > 750){
+
+        
+        player.kill();
+
+        stateText.text=" PERDISTE D: \n Click para reiniciar";
+        stateText.visible = true;
+
+        player.position.x = 20;
+        player.position.y= 500;
+
+        score = 0;
+        //the "click to restart" handler
+        game.input.onTap.addOnce(restart,this);
+
+    }
+
+//
+
+    //FONDO
+
+    fondo.tilePosition.x -= 0.08
+
+    //
+    
+    game.physics.arcade.collide(enemigo, layer);
+    game.physics.arcade.collide(zombie, layer);
+    game.physics.arcade.collide(player, layer);
+    game.physics.arcade.overlap(bullets, enemigo, collisionenemigo, null, this);
+    game.physics.arcade.overlap(bullets, zombie, collisionzombie, null, this);
+    game.physics.arcade.overlap(enemyBullets, player, enemyHitsPlayer, null, this);
+    game.physics.arcade.overlap(player, coins, RecogerCoins, null, this);
+   
+
+    player.body.velocity.x = 0;
+
+
+    //zombie
+
+   /* if(zombie.getAt(2).position.x -= 1){
+        if (zombie.getAt(2).position.x > 10){
+            zombie.getAt(2).position.x -= 2;
+        }
+
+        else if (zombie.getAt(2).position.x < 10){
+            zombie.getAt(2).position.x += 2;
+        }
+    }*/
+
+
+
+    //Teclas
+
+    if (cursors.right.isDown)
+    {
+        player.body.velocity.x = 150;
+
+        if (facing != 'right')
+        {
+            player.animations.play('right');
+            facing = 'right';
+        }
+    }
+
+    else if (cursors.left.isDown)
+    {
+        player.body.velocity.x = -150;
+
+        if (facing != 'left')
+        {
+            player.animations.play('left');
+            facing = 'left';
+        }
+    }
+
+    else
+    {
+        if (facing != 'idle')
+        {
+            player.animations.stop();
+
+            if (facing == 'right')
+            {
+                player.animations.play('idle');
+            }
+            else
+            {
+                player.animations.play('idle2');
+            }
+
+            facing = 'idle';
+        }
+    }
+   
+
+    if (cursors.up.isDown && player.body.onFloor() && game.time.now > jumpTimer && facing != 'left' )
+    {
+        player.body.velocity.y = -200;
+        jumpTimer = game.time.now + 250;
+
+       
+            player.animations.play('jump');
+            
+       
+    }
+
+    else if (cursors.up.isDown && player.body.onFloor() && game.time.now > jumpTimer && facing != 'right')
+    {
+        player.body.velocity.y = -200;
+        jumpTimer = game.time.now + 250;
+
+       
+            player.animations.play('jump2');
+         
+    }
+
+   
+    if (shootButton.isDown)
+    {
+        fireBullet();
+    }
+
+    if (game.time.now > firingTimer)
+        {
+            enemyFires();
+        }
+
+}
+
+
+
+
+function createEnemigos () {
+
+    enemigo.create(1380, 200, 'enemi');
+    enemigo.create(1245, 430, 'enemi');
+    enemigo.create(2300, 190, 'enemi');
+    enemigo.create(2900, 100, 'enemi');
+    enemigo.create(3550, 200, 'enemi');
+    enemigo.create(4150, 400, 'enemi');
+    enemigo.create(4650, 500, 'enemi');
+   
+    enemigo.setAll('body.gravity.y', 200);
+    enemigo.setAll('body.bounce.y', 0.2);
+
+    enemigo.callAll('animations.add', 'animations', 'breathe', [0, 1, 2, 3, 4, 5], 10, true);
+    enemigo.callAll('animations.play', 'animations', 'breathe');
+}
+
+function createZombies () {
+
+    zombie.create(1135, 220, 'zombi');
+    zombie.create(1300, 600, 'zombi');
+    zombie.create(1745, 220, 'zombi');
+    zombie.create(3900, 200, 'zombi');
+   
+    zombie.setAll('body.gravity.y', 200);
+    zombie.setAll('body.bounce.y', 0.2);
+
+    zombie.callAll('animations.add', 'animations', 'afk', [0, 1, 2, 3], 8, true);
+    zombie.callAll('animations.play', 'animations', 'afk');
+}
+
+function createMonedas () {
+
+    coins.create(1140, 180, 'bonus');
+    coins.create(1535, 510, 'bonus');
+    coins.create(1300, 600, 'bonus');
+    coins.create(1745, 200, 'bonus');
+    coins.create(3075, 50, 'bonus');
+    coins.create(3035, 80, 'bonus');
+    coins.create(3115, 80, 'bonus');
+    coins.create(3005, 110, 'bonus');
+    coins.create(3145, 110, 'bonus');
+    coins.create(3850, 190, 'bonus');
+    coins.create(3900, 190, 'bonus');
+
+
+
+    coins.setAll('body.immovable', false);
+
+    coins.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4], 10, true);
+    coins.callAll('animations.play', 'animations', 'spin');
+}
+
+
+function fireBullet () {
+
+    if (game.time.now > bulletTime)
+    {
+        bullet = bullets.getFirstExists(false);
+
+       
+
+        if ( facing != 'left')
+        {
+            bullet.reset(player.x + 44, player.y + 20 );
+            bullet.body.velocity.x = 300;
+            bulletTime = game.time.now + 150;
+        }
+
+        else if (facing = 'right')
+        {
+            bullet.reset(player.x + 3, player.y + 20 );
+            bullet.body.velocity.x = -300;
+            bulletTime = game.time.now + 150;
+        }
+
+       
+
+     
+
+
+    }
+
+}
+
+function enemyFires () {
+
+    //  Grab the first bullet we can from the pool
+    enemyBullet = enemyBullets.getFirstExists(false);
+
+    livingEnemies.length=0;
+
+    enemigo.forEachAlive(function(enemigo){
+
+        // put every living enemy in an array
+        livingEnemies.push(enemigo);
+    });
+
+
+    if (enemyBullet && livingEnemies.length > 0)
+    {
+       
+        var random=game.rnd.integerInRange(0,livingEnemies.length-1);
+
+        // randomly select one of them
+        var shooter=livingEnemies[random];
+        // And fire the bullet from this enemy
+        enemyBullet.reset(shooter.body.x, shooter.body.y);
+
+        game.physics.arcade.moveToObject(enemyBullet,player,120);
+        firingTimer = game.time.now + 2000;
+    }
+
+}
+
+function enemyHitsPlayer (player,bullet) {
+    
+    bullet.kill();
+
+    live = lives.getFirstAlive();
+
+    if (live)
+    {
+        live.kill();
+    }
+
+
+    // When the player dies
+    if (lives.countLiving() < 1)
+    {
+        player.kill();
+        enemyBullets.callAll('kill');
+
+        stateText.text=" PERDISTE D: \n Click para reiniciar";
+        stateText.visible = true;
+
+        player.position.x = 20;
+        player.position.y= 500;
+
+        score = 0;
+
+        //the "click to restart" handler
+        game.input.onTap.addOnce(restart,this);
+    }
+
+}
+
+function resetBullet (bullet) {
+
+    bullet.kill();
+
+}
+
+function RecogerCoins (player, coins) {
+
+    coins.kill();
+    score += 100;
+}
+
+//  Called if the bullet hits one of the ene sprites
+function collisionenemigo (bullet, ene) {
+
+    bullet.kill();
+    ene.kill();
+    score += 200;
+
+    if (enemigo.countLiving() == 0)
+    {
+
+        score += 1000;
+        enemyBullets.callAll('kill',this);
+        stateText.text = " GANASTE!, \n Click para reiniciar";
+        stateText.visible = true;
+
+
+        /*player.position.x = 20;
+        player.position.y= 500;*/
+                                
+        score = 0;
+
+        //the "click to restart" handler
+        game.input.onTap.addOnce(restart,this);
+    }
+
+}
+
+function collisionzombie(bullet, zombie) {
+
+    bullet.kill();
+    zombie.kill();
+    score += 50;
+
+}
+
+function restart () {
+
+    //  A new level starts
+    
+    //resets the life count
+    lives.callAll('revive');
+    //  And brings the aliens back from the dead :)
+    enemigo.removeAll();
+    createEnemigos();
+
+    zombie.removeAll();
+    createZombies();
+
+    coins.removeAll();
+    createMonedas();
+
+    //revives the player
+    player.revive();
+
+    //hides the text
+    stateText.visible = false;
+
+}
+
+
+function render () {
+
+    game.debug.text ('Puntaje: ' + score , 32 ,32)
+
+    
+
+}
+
+</script>
