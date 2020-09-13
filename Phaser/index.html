@@ -26,7 +26,7 @@
         var powerCharge = 0;
         var recharge = 0;
         var stateText;
-        
+
         function preload () {
 
             game.load.image('ms', 'sprites/Sprite_player.png');
@@ -39,8 +39,8 @@
             game.load.image('three', 'sprites/Sprite_three.png');
             game.load.image('two', 'sprites/Sprite_two.png');
             game.load.image('heart', 'sprites/heart.png');
-            game.load.image('power', 'sprites/power.png');
-            game.load.image('recharge', 'sprites/recharge.png');
+            game.load.image('power', 'sprites/Power.png');
+            game.load.image('recharge', 'sprites/Recharge.png');
             game.load.audio('laserPlayer','musica/laser.mp3')
             game.load.audio('expo','musica/BoomEnemy.mp3')
             game.load.audio('superBoom','musica/BoomPlayer.mp3')
@@ -58,15 +58,15 @@
 
         //Scroll campo de estrellas
         starfield = game.add.tileSprite(0, 0, 800, 600, 'starfield');
-        
+
         //Sprites
         player = game.add.sprite(350, 500, 'ms');
-        
+
         //Musica
         musica = game.add.audio('musica');
         musica.play();
         musica.volume = 0.1;
-        
+
 
         //Grupo de balas
         bullets = game.add.group();
@@ -77,7 +77,7 @@
         bullets.setAll('anchor.y', 1);
         bullets.setAll('outOfBoundsKill', true);
         bullets.setAll('checkWorldBounds', true);
-        
+
         // Balas enemigo
         enemyBullets = game.add.group();
         enemyBullets.enableBody = true;
@@ -88,7 +88,7 @@
         enemyBullets.setAll('outOfBoundsKill', true);
         enemyBullets.setAll('checkWorldBounds', true);
 
-        
+
 
         //  An explosion pool
         explosions = game.add.group();
@@ -106,14 +106,14 @@
         explosionsPower2 = game.add.group();
         explosionsPower2.createMultiple(100, 'kaboom');
         explosionsPower2.forEach(setupEnemyOne, this);
-        
 
-        
+
+
         //  An explosion pool
         supExplosions = game.add.group();
         supExplosions.createMultiple(30, 'boom');
         supExplosions.forEach(setupPlayer, this);
-       
+
         //Enemigo uno
 
         enemyOne = game.add.group();
@@ -156,11 +156,11 @@
         chargeBar = game.add.sprite(304,30,'recharge');
         powerBar.scale.x = 0;
         chargeBar.scale.x = 0;
-        
+
         //Fisicas
         game.physics.enable( [ player ], Phaser.Physics.ARCADE);
         player.body.collideWorldBounds = true;
-   
+
         //Controles
 
         cursors = game.input.keyboard.createCursorKeys();
@@ -175,10 +175,10 @@
         stateText = game.add.text(game.world.centerX,game.world.centerY,' ', { font: '84px Arial', fill: '#fff' });
         stateText.anchor.setTo(0.5, 0.5);
         stateText.visible = false;
-        
+
         }
         function boomOne(){
-            
+
             enemyOne.forEachAlive(function(one){
 
             // put every living enemy in an array
@@ -186,7 +186,7 @@
             });
             if(livingEnemies.length>0){
                 for(var i = 0; i<livingEnemies.length-1;i++){
-            var shooter=livingEnemies[i];       
+            var shooter=livingEnemies[i];
             var explosion = explosionsPower.getFirstExists(false);
             explosion.reset(shooter.body.x, shooter.body.y);
             explosion.play('kaboom', 50, false, true);
@@ -194,7 +194,7 @@
         }
     }
         function boomTwo(){
-            
+
             enemyTwo.forEachAlive(function(two){
 
             // put every living enemy in an array
@@ -202,7 +202,7 @@
             });
             if(livingEnemies.length>0){
                 for(var i = 0; i<livingEnemies.length;i++){
-            var shooter=livingEnemies[i];       
+            var shooter=livingEnemies[i];
             var explosion = explosionsPower1.getFirstExists(false);
             explosion.reset(shooter.body.x, shooter.body.y);
             explosion.play('kaboom', 50, false, true);
@@ -210,7 +210,7 @@
         }
     }
         function boomThree(){
-            
+
             enemyThree.forEachAlive(function(three){
 
             // put every living enemy in an array
@@ -218,7 +218,7 @@
             });
             if(livingEnemies.length>0){
                 for(var i = 0; i<livingEnemies.length-1;i++){
-            var shooter=livingEnemies[i];       
+            var shooter=livingEnemies[i];
             var explosion = explosionsPower2.getFirstExists(false);
             explosion.reset(shooter.body.x, shooter.body.y);
             explosion.play('kaboom', 50, false, true);
@@ -244,14 +244,14 @@
         explo.play();
         explo.volume = 0.1;
 
-        
+
 
     }
-    
+
 
     function enemyFiresTwo () {
-    		
-       
+
+
          enemyBullet = enemyBullets.getFirstExists(false);
 
         livingEnemies.length=0;
@@ -267,7 +267,7 @@
         {
         prob = prob + (time/10000)
         var random=game.rnd.integerInRange(0,livingEnemies.length-1);
-        
+
         // randomly select one of them
         var shooter=livingEnemies[random];
         // And fire the bullet from this enemy
@@ -276,7 +276,7 @@
         enemyBullet.reset(shooter.body.x + 32, shooter.body.y);
         enemyBullet.body.velocity.y = 100 ;
         firingTimer = game.time.now + 100;}
-        
+
         else if(r>0.25 && r<0.5){
         enemyBullet.reset(shooter.body.x + 32, shooter.body.y + 64);
         enemyBullet.body.velocity.y = -100 ;
@@ -291,15 +291,15 @@
         enemyBullet.reset(shooter.body.x+64 , shooter.body.y + 32);
         enemyBullet.body.velocity.x = 100 ;
         firingTimer = game.time.now + 100;}
-        
-        
+
+
     }
 
-        
+
     }
 
     function enemyFiresThree () {
-       
+
 
          enemyBullet = enemyBullets.getFirstExists(false);
 
@@ -316,7 +316,7 @@
         {
         prob = prob + (time/10000)
         var random=game.rnd.integerInRange(0,livingEnemies.length-1);
-        
+
         // randomly select one of them
         var shooter=livingEnemies[random];
         // And fire the bullet from this enemy
@@ -326,7 +326,7 @@
         enemyBullet.body.velocity.y = 100 ;
         enemyBullet.body.velocity.x = -50 ;
         firingTimer = game.time.now + 100;}
-        
+
         else if(r>0.33 && r<0.66){
         enemyBullet.reset(shooter.body.x + 5, shooter.body.y + 40);
         enemyBullet.body.velocity.y = 100 ;
@@ -339,16 +339,16 @@
         enemyBullet.body.velocity.x = -50 ;
         firingTimer = game.time.now + 100;}
 
-        
-        
-        
+
+
+
     }
 
-        
+
     }
 
      function enemyHitsPlayer (player,bullet) {
-    
+
         bullet.kill();
 
         vida = vida -1
@@ -370,7 +370,7 @@
         }
         if (vida < 2)
         {
-       
+
         vida2.kill();
         expo = game.add.audio('expo');
         expo.play();
@@ -379,7 +379,7 @@
 
         }
         if (vida < 1)
-        {   
+        {
         player.kill();
         vida3.kill();
         enemyBullets.callAll('kill');
@@ -387,9 +387,9 @@
         gameover = game.add.audio('gameover');
         gameover.play();
         gameover.volume = 0.5;
-        
 
-        
+
+
         stateText.text=" GAME OVER \n Click to restart";
         stateText.visible = true;
 
@@ -401,16 +401,16 @@
 }
 
 
-        
 
-    
+
+
 
         function update() {
         starfield.tilePosition.y += 2;
         time += 1;
-        
+
         createAliens();
-        
+
 
             if (player.alive)
     {
@@ -448,7 +448,7 @@
 
 
             }
-            
+
         }
         if(powerButton.isDown){
             firePower();
@@ -466,17 +466,17 @@
             chargeBar.scale.x = recharge
             recharge -=0.001;
         }
-        
+
         //  Run collision
         game.physics.arcade.overlap(bullets, enemyOne, collisionHandler, null, this);
         game.physics.arcade.overlap(bullets, enemyTwo, collisionHandler, null, this);
         game.physics.arcade.overlap(bullets, enemyThree, collisionHandler, null, this);
-    
+
         game.physics.arcade.overlap(enemyBullets, player, enemyHitsPlayer, null, this);
 
         powerCharge += 0.0009;
         if(powerCharge < 1){
-            
+
             powerBar.scale.x = powerCharge
             }
             else if (powerCharge > 1){
@@ -490,12 +490,12 @@
             }
         console.log(recharge)
 
-        
 
-        
+
+
     }
-    
-        
+
+
 
 }
 
@@ -514,7 +514,7 @@
         explo.volume = 1;
 
         }
-        
+
 
 
         }
@@ -539,9 +539,9 @@
             bullet.reset(player.x - 13, player.y - 10 );
             bullet.body.velocity.y = -400 ;
             firingTimer = game.time.now + 1000;
-            
+
         }
-       
+
 
         else if (bullet && r>0.5 && r<1)
         {
@@ -549,7 +549,7 @@
             bullet.reset(player.x + 13, player.y - 10  );
             bullet.body.velocity.y = -400 ;
             bulletTime = game.time.now + 100;
-            
+
         }
 
         }
@@ -570,7 +570,7 @@
         player.animations.add('boom');
 
 }
-        
+
         function createAliens () {
             var rOne = Math.random();
             var rTwo = Math.random();
@@ -580,17 +580,17 @@
             prob = prob + (time/10000)
 
            if(rOne>0 && rOne<0.08){
-                
+
                 one = enemyOne.getFirstExists(false);
                 if(one){
                 one.reset(200 * r2, 0 );
                 one.body.velocity.y = 50 ;
                 p=p+1
-            
+
             }
         }
             if(rTwo>0 && rTwo<0.01){
-                
+
 
                 two = enemyTwo.getFirstExists(false);
                 if(two){
@@ -602,14 +602,14 @@
                 }
                 else{
                 two.body.velocity.y = 50;
-                two.body.velocity.x = -50; 
+                two.body.velocity.x = -50;
                 }
                 p=p+1
-      
+
         }
     }
             if(rThree>0 && rThree<0.03){
-                
+
                 three = enemyThree.getFirstExists(false);
                 if(three){
                     if(r2<0.5){
@@ -618,15 +618,15 @@
                     else{
                     three.reset(800, 100*r2 );
                     three.body.velocity.x = -50;}
-                    
-      
+
+
         }
             }
         }
 
 
         function enemyFires () {
-        	
+
 
         //  Grab the first bullet we can from the pool
         enemyBullet = enemyBullets.getFirstExists(false);
@@ -642,7 +642,7 @@
 
         if (enemyBullet && livingEnemies.length > 0)
         {
-        
+
         var random=game.rnd.integerInRange(0,livingEnemies.length-1);
 
         // randomly select one of them
@@ -652,19 +652,19 @@
 
         enemyBullet.body.velocity.y = 100;
         firingTimer = game.time.now + 100;
-        
+
     }
 }
     function restart () {
 
     //  A new level starts
-    
+
     //resets the life count
     vida = 3;
     vida1.revive()
     vida2.revive()
     vida3.revive()
-    
+
 
     //  And brings the aliens back from the dead :)
     enemyOne.callAll('kill');
