@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ciudad Procedural</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/100/three.min.js"></script>
+	<script src="OrbitControls.js"></script>
+	<header>
+	  <div class="container-fluid p-0" >
+
+	      <div class="row justify-content-center">
+	        <div class="col">
+
+
+
+	      <nav class="navbar navbar-expand navbar-light bg-transparent " >
+
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+	          <span class="navbar-toggler-icon"></span>
+	        </button>
+
+	        <div class="collapse navbar-collapse justify-content-center align-items-center" id="navbarNavAltMarkup">
+	          <div class="navbar-nav">
+
+	            <li class="nav-item ">
+	              <a class="nav-link" href="../../index.html">Inicio</a>
+	            </li>
+
+	            <li class="nav-item dropdown text-dark" >
+	              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                Programacion
+	              </a>
+	              <div class="dropdown-menu active" aria-labelledby="navbarDropdown">
+	                <a class="dropdown-item" href="../parcial.html">Sistema Solar</a>
+	                <a class="dropdown-item " href="../Piramide.html">Piramide</a>
+									<a class="dropdown-item active " href="MatrizCiudad.html">Ciudad Procedural</a>
+	                <div class="dropdown-divider"></div>
+	                <a class="dropdown-item" href="../../Phaser/index.html">Shoot Them Down</a>
+	              </div>
+	            </li>
+
+	            <li class="nav-item dropdown text-light" >
+	              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                Edicion
+	              </a>
+	              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	                <a class="dropdown-item" href="../../videos/jamcam.html">JamCam 2020</a>
+	              </div>
+	            </li>
+
+	            <li class="nav-item">
+	              <a class="nav-link" href="../../foto/index.html">Fotografias</a>
+	            </li>
+
+	        </div>
+	      </div>
+	    </nav>
+	  </div>
+	  </div>
+		</header>
+		<script>
+    	function semaforo(){
+
+          var LoaderPoste = new THREE.TextureLoader();
+          var TexMetal = LoaderPoste.load( 'Edificios/metal.jpg' );
+
+
+          var materialSemaforo = new THREE.MeshBasicMaterial({map: TexMetal,reflectivity: 1.5,center: TexMetal});
+          var materialCaja = new THREE.MeshBasicMaterial({color:0x000000});
+          var geometrySemaforo = new THREE.BoxGeometry( 0.02, 0.02, 0.8 );
+          var geometryCaja = new THREE.BoxGeometry( 0.05, 0.05, 0.07);
+
+          var caja = new THREE.Mesh( geometryCaja, materialCaja);
+          var Semaforo = new THREE.Mesh( geometrySemaforo, materialSemaforo);
+          var caja2 = new THREE.Mesh( geometryCaja, materialCaja);
+          var Semaforo2 = new THREE.Mesh( geometrySemaforo, materialSemaforo);
+
+		  caja.position.x=i+0.4;
+          caja.position.y=j+0.4;
+          caja.position.z=0.4;
+          Semaforo.position.x=i+0.4;
+          Semaforo.position.y=j+0.4;
+          caja2.position.x=i-0.4;
+          caja2.position.y=j-0.4;
+          caja2.position.z=0.4;
+          Semaforo2.position.x=i-0.4;
+          Semaforo2.position.y=j-0.4;
+
+          scene.add(caja);
+          scene.add(Semaforo)
+          scene.add(Semaforo2)
+          scene.add(caja2);
+
+    	}
+      var M1 = [];
+      var M2 = [];
+      var M3 = [];
+
+      //var nstring = prompt("Ingrese la medida de la ciudad", );
+
+      //var n= Math.floor(parseInt(nstring, 10));
+      var n=40;
+      var r=0;
+      //Crear Matriz principal
+      for(var i=0;i<n;i++){
+        var Ma =[];
+        M1.push(Ma)
+
+      }
+      for(var i=0;i<n;i++){
+        for(var j=0;j<n;j++){
+          M1[i][j]=1;
+
+        }
+      }
+      //Crea Matriz complementaria
+      for(var i=0;i<n;i++){
+        var Ma =[];
+        M2.push(Ma)
+      }
+      for(var i=0;i<n;i++){
+        for(var j=0;j<n;j++){
+          M2[i][j]=1;
+        }
+      }
+
+      for(var i=0;i<n;i++){
+        var Ma =[];
+        M3.push(Ma)
+      }
+      for(var i=0;i<n;i++){
+        for(var j=0;j<n;j++){
+          M3[i][j]=1;
+        }
+      }
+
+
+
+//Pone 0 de manera aleatoria
+      for(var i=0;i<n;i+=2){
+        for(var j=0;j<n;j+=2){
+          r= Math.random()
+          if (r<0.80){
+          M1[i][j]=1;
+        }else{
+          M1[i][j]=0;
+        }
+        }
+      }
+    console.log(M1)
+//Compara la matriz original y la complementaria
+      for(var i=0;i<n;i++)
+      {
+        for(var j=0;j<n;j++)
+        {
+
+
+          if(M1[i][j]==0)
+          {
+            var ran =Math.floor(Math.random()*10);
+
+            if(ran==0)
+            {
+
+              for(var a=i;a<n;a++){M2[a][j]=0}
+
+              for(var b=j;b<n;b++){M2[i][b]=0}
+            }
+            if(ran==1)
+            {
+
+              for(var a=0;a<i;a++){M2[a][j]=0}
+
+              for(var b=0;b<n;b++){M2[i][b]=0}
+            }
+            if(ran==2)
+            {
+
+              for(var a=0;a<n;a++){M2[a][j]=0}
+
+              for(var b=0;b<n;b++){M2[i][b]=0}
+            }
+
+
+
+
+
+
+          }
+
+
+        }
+      }
+
+
+
+   console.log(M2)
+
+
+   for(var i=0;i<n;i++)
+      {
+        for(var j=0;j<n;j++)
+        {
+          if(M2[0][i]==0){
+            M2[0][i]=1;
+          }
+          if(M2[n-1][i]==0){
+            M2[n-1][i]=1;
+          }
+          if(M2[i][0]==0){
+            M2[i][0]=1;
+          }
+          if(M2[i][n-1]==0){
+            M2[i][n-1]=1;
+          }
+        }
+      }
+
+
+
+
+
+
+
+   console.log(M2)
+
+
+
+
+
+    var scene = new THREE.Scene();
+    var aspect = window.innerWidth / window.innerHeight;
+    var camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
+    camera.lookAt ( 0, 0, 0)
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
+    cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
+    cameraControls.target.set( n/2, n/2, 0 );
+    cameraControls.update();
+
+
+    var textureLoader = new THREE.TextureLoader();
+    var TexEdificio = textureLoader.load( 'Edificios/edificio2.jpg' );
+    var material1 = new THREE.MeshBasicMaterial({map: TexEdificio,reflectivity: 1.5,center: TexEdificio});
+
+    var textureLoader6 = new THREE.TextureLoader();
+    var TexEdificio2 = textureLoader.load( 'Edificios/edificio1.jpg' );
+    var materialEd2 = new THREE.MeshBasicMaterial({map: TexEdificio2,reflectivity: 1.5,center: TexEdificio2});
+
+    var textureLoader7 = new THREE.TextureLoader();
+    var TexPasto = textureLoader.load( 'Edificios/pasto.jpg' );
+    var materialPasto = new THREE.MeshBasicMaterial({map: TexPasto,reflectivity: 1.5,center: TexPasto});
+
+    var textureLoader8 = new THREE.TextureLoader();
+    var TexEdificio3 = textureLoader.load( 'Edificios/edificio3.jfif' );
+    var materialEd3 = new THREE.MeshBasicMaterial({map: TexEdificio3,reflectivity: 1.5,center: TexEdificio3});
+
+    var textureLoader8 = new THREE.TextureLoader();
+    var TexEdificio4 = textureLoader.load( 'Edificios/edificio4.jpg' );
+    var materialEd4 = new THREE.MeshBasicMaterial({map: TexEdificio4,reflectivity: 1.5,center: TexEdificio4});
+
+    var textureLoader2 = new THREE.TextureLoader();
+    var TexInter = textureLoader2.load( 'Calles/interseccion.jpg' );
+    var materialinter = new THREE.MeshBasicMaterial({map: TexInter,reflectivity: 1.5,center: TexInter});
+
+    var textureLoader3 = new THREE.TextureLoader();
+    var TexT = textureLoader3.load( 'Calles/t.jpg' );
+    var materialt = new THREE.MeshBasicMaterial({map: TexT,reflectivity: 1.5,center: TexT});
+
+    var textureLoader4 = new THREE.TextureLoader();
+    var TexRecta = textureLoader4.load( 'Calles/recta.jpg' );
+    var materialrect = new THREE.MeshBasicMaterial({map:TexRecta,reflectivity: 1.5,center:TexRecta} );
+
+    var textureLoader5 = new THREE.TextureLoader();
+    var TexCurva = textureLoader5.load( 'Calles/curva.jpg' );
+    var materialcur = new THREE.MeshBasicMaterial({map:TexCurva,reflectivity: 1.5,center:TexCurva} );
+
+    var geometry3 = new THREE.BoxGeometry(1,1,0.1);
+
+
+
+
+
+    camera.position.x = n/2;
+    camera.position.y = n/2;
+    camera.position.z = 20;
+
+
+
+
+    for(var i=0;i<n;i++)
+    {
+        for(var j=0;j<n;j++)
+        {
+          if(M2[i][j]==0)
+            {//INICIO CALLES
+              if((M2[i+1][j]==0)&&(M2[i-1][j]==0)&&(M2[i][j+1]==0)&&(M2[i][j-1]==0))//interseccion
+                {
+
+                var inter = new THREE.Mesh(geometry3,materialinter)
+                inter.position.x=i;
+                inter.position.y=j;
+                scene.add(inter);
+                semaforo();
+                }
+
+
+
+
+            if((M2[i-1][j]==0)&&(M2[i+1][j]==0)&&(M2[i][j+1]==0)&&(M2[i][j-1]!=0)){
+
+                var t1 = new THREE.Mesh(geometry3,materialt)
+                t1.position.x=i;
+                t1.position.y=j;
+                t1.rotation.z=1.5708*2;
+                scene.add(t1);
+                }
+
+                if((M2[i-1][j]!=0)&&(M2[i+1][j]==0)&&(M2[i][j+1]==0)&&(M2[i][j-1]==0)){
+
+                var t2 = new THREE.Mesh(geometry3,materialt)
+                t2.position.x=i;
+                t2.position.y=j;
+                t2.rotation.z=1.5708;
+                scene.add(t2);
+                }
+
+                if((M2[i-1][j]==0)&&(M2[i+1][j]==0)&&(M2[i][j+1]!=0)&&(M2[i][j-1]==0)){
+
+                var t3 = new THREE.Mesh(geometry3,materialt)
+                t3.position.x=i;
+                t3.position.y=j;
+                t3.rotation.z=1.5708*4;
+                scene.add(t3);
+                }
+
+                if((M2[i-1][j]==0)&&(M2[i+1][j]!=0)&&(M2[i][j+1]==0)&&(M2[i][j-1]==0)){
+
+                var t4 = new THREE.Mesh(geometry3,materialt)
+                t4.position.x=i;
+                t4.position.y=j;
+                t4.rotation.z=-1.5708;
+                scene.add(t4);
+                }
+
+
+                if((M2[i-1][j]==0)&&(M2[i+1][j]==0)&&(M2[i][j+1]!=0)&&(M2[i][j-1]!=0)){
+
+                var recta = new THREE.Mesh(geometry3,materialrect)
+                recta.position.x=i;
+                recta.position.y=j;
+                scene.add(recta);
+                }
+
+                if((M2[i-1][j]!=0)&&(M2[i+1][j]!=0)&&(M2[i][j+1]==0)&&(M2[i][j-1]==0)){
+
+                var recta2 = new THREE.Mesh(geometry3,materialrect)
+                recta2.position.x=i;
+                recta2.position.y=j;
+                recta2.rotation.z=Math.PI/2;
+                scene.add(recta2);
+                }
+
+
+                if((M2[i-1][j]!=0)&&(M2[i+1][j]==0)&&(M2[i][j+1]==0)&&(M2[i][j-1]!=0)){
+
+                var curva1 = new THREE.Mesh(geometry3,materialcur)
+                curva1.position.x=i;
+                curva1.position.y=j;
+                curva1.rotation.z=1.5708;
+                scene.add(curva1);
+                }
+
+                if((M2[i-1][j]==0)&&(M2[i+1][j]!=0)&&(M2[i][j+1]==0)&&(M2[i][j-1]!=0)){
+
+                var curva2 = new THREE.Mesh(geometry3,materialcur)
+                curva2.position.x=i;
+                curva2.position.y=j;
+                curva2.rotation.z=-1.5708;
+                scene.add(curva2);
+                }
+
+                if((M2[i-1][j]==0)&&(M2[i+1][j]!=0)&&(M2[i][j+1]!=0)&&(M2[i][j-1]==0)){
+
+                var curva3 = new THREE.Mesh(geometry3,materialcur)
+                curva3.position.x=i;
+                curva3.position.y=j;
+                curva3.rotation.z=1.5708*6;
+                scene.add(curva3);
+                }
+
+                if((M2[i-1][j]!=0)&&(M2[i+1][j]==0)&&(M2[i][j+1]!=0)&&(M2[i][j-1]==0)){
+
+                var curva4 = new THREE.Mesh(geometry3,materialcur)
+                curva4.position.x=i;
+                curva4.position.y=j;
+                scene.add(curva4);
+                }
+
+                if((M2[i-1][j]!=0)&&(M2[i+1][j]!=0)&&(M2[i][j+1]!=0)&&(M2[i][j-1]==0)){
+
+                var rect7 = new THREE.Mesh(geometry3,materialrect)
+                rect7.position.x=i;
+                rect7.position.y=j;
+                rect7.rotation.z=1.5708
+                scene.add(rect7);
+                }
+
+                if((M2[i-1][j]!=0)&&(M2[i+1][j]!=0)&&(M2[i][j+1]==0)&&(M2[i][j-1]!=0)){
+
+                var rect8 = new THREE.Mesh(geometry3,materialrect)
+                rect8.position.x=i;
+                rect8.position.y=j;
+                rect8.rotation.z=1.5708
+                scene.add(rect8);
+                }
+
+                if((M2[i-1][j]==0)&&(M2[i+1][j]!=0)&&(M2[i][j+1]!=0)&&(M2[i][j-1]!=0)){
+
+                var rect9 = new THREE.Mesh(geometry3,materialrect)
+                rect9.position.x=i;
+                rect9.position.y=j;
+                scene.add(rect9);
+                }
+
+                if((M2[i-1][j]!=0)&&(M2[i+1][j]==0)&&(M2[i][j+1]!=0)&&(M2[i][j-1]!=0)){
+
+                var rect10 = new THREE.Mesh(geometry3,materialrect)
+                rect10.position.x=i;
+                rect10.position.y=j;
+                scene.add(rect10);
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+          }//FIN CALLES
+
+
+
+
+
+
+          if (M2[i][j]==1)
+          {
+            var azar = Math.random()*10
+
+          if(azar>0 && azar<6){
+          var geometry1 = new THREE.BoxGeometry( 1, 1, Math.abs(Math.random()*5)+0.5 );
+          var edificio = new THREE.Mesh( geometry1, material1 );
+          edificio.position.x=i;
+          edificio.position.y=j;
+          scene.add(edificio)}
+
+          else if(azar>6.5 && azar<8){
+          var geometry2 = new THREE.BoxGeometry( 1, 1, Math.abs(Math.random()*5)+3.5 );
+          var edificio2 = new THREE.Mesh( geometry2, materialEd2);
+          edificio2.position.x=i;
+          edificio2.position.y=j;
+          scene.add(edificio2)
+          }
+
+          else if(azar>8 && azar<9.7){
+          var parque = new THREE.Mesh( geometry3, materialPasto);
+          parque.position.x=i;
+          parque.position.y=j;
+          scene.add(parque)
+          }
+
+          else{
+          var geometry2 = new THREE.BoxGeometry( 1, 1, Math.abs(Math.random()*5)+1.5 );
+          var edificio4 = new THREE.Mesh( geometry2, materialEd4);
+          edificio4.position.x=i;
+          edificio4.position.y=j;
+          scene.add(edificio4)
+          }
+
+
+
+
+       }
+
+
+
+
+
+
+          }
+        }
+
+var render = function () {
+  requestAnimationFrame( render );
+  renderer.render(scene,camera)
+};
+
+render();
+
+    </script>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>

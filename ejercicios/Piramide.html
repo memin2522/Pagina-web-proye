@@ -12,55 +12,57 @@
 
 
 <header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-  <a class="navbar-brand text-light" href="#" style="width: 250px">Ejemplo Esferas</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-       
-       <li class="nav-item dropdown text-light" style="width: 150px">
-        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-          Ejemplos
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_effects_stereo.html">Ejemplo Vista Burbujas</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_loader_obj.html">Ejemplo Modelo Persona</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_materials_cubemap.html">Ejemplo Caras</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_materials_cubemap_mipmaps.html">Ejemplo Esferas</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_loader_obj_mtl.html">Ejemplo Modelo Vestido</a>
-        </div>
-      </li>
+  <div class="container-fluid p-0" >
 
-       <li class="nav-item dropdown text-light" style="width: 150px">
-        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Ejercicios
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="parcial.html">Parcial Sistema Solar</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/Effects_Model.html">Vista + Modelo</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_effects_stereo_rotacion.html">Effects 360</a>
-          <a class="dropdown-item" href="Piramide.html">Piramide</a>
-          
-          
-        </div>
-      </li>
+      <div class="row justify-content-center">
+        <div class="col">
 
-       <li class="nav-item dropdown text-light" style="width: 150px">
-        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Videos
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="../videos/jamcam.html">JamCam 2020</a>
-          
-          
+
+
+      <nav class="navbar navbar-expand navbar-light bg-transparent " >
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center align-items-center" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+
+            <li class="nav-item ">
+              <a class="nav-link" href="../index.html">Inicio</a>
+            </li>
+
+            <li class="nav-item dropdown text-dark" >
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Programacion
+              </a>
+              <div class="dropdown-menu active" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="parcial.html">Sistema Solar</a>
+                <a class="dropdown-item active" href="Piramide.html">Piramide</a>
+                <a class="dropdown-item  " href="Ciudad/MatrizCiudad.html">Ciudad Procedural</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="../Phaser/index.html">Shoot Them Down</a>
+              </div>
+            </li>
+
+            <li class="nav-item dropdown text-light" >
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Edicion
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="../videos/jamcam.html">JamCam 2020</a>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="../foto/index.html">Fotografias</a>
+            </li>
+
         </div>
-      </li>
-    
-    </div>
+      </div>
+    </nav>
   </div>
-</nav>
+  </div>
 	</header>
 
 
@@ -137,72 +139,72 @@ var geometry4 = new THREE.BoxGeometry( 0.05, 0.05, 0.05 );
    cube4.position.y = Math.random();
    cube4.position.z = Math.random();
 
-        
+
 var render = function () {
   requestAnimationFrame( render );
-  
-     
+
+
 
    for(var i=0; i<5; i++){
-   
+
    var point = Math.floor(Math.random()*5);
-   
+
    if(point == 0){
    	var cube5 = new THREE.Mesh( geometry4, material4 );
 	scene.add( cube5 );
 	cube5.position.x= (x+cube1.position.x)/2;
-	x=cube5.position.x  
+	x=cube5.position.x
 	cube5.position.y= (y+cube1.position.y)/2;
 	y=cube5.position.y
 	cube5.position.z= (z+cube1.position.z)/2;
-	z=cube5.position.z  
-	
+	z=cube5.position.z
+
 
    }
     if(point==1){
    	var cube5 = new THREE.Mesh( geometry4, material4 );
 	scene.add( cube5 );
 	cube5.position.x= (x+cube2.position.x)/2;
-	x=cube5.position.x  
+	x=cube5.position.x
 	cube5.position.y= (y+cube2.position.y)/2;
 	y=cube5.position.y
 	cube5.position.z= (z+cube2.position.z)/2;
-	z=cube5.position.z 
+	z=cube5.position.z
 
    }
    if(point ==2){
    	var cube5 = new THREE.Mesh( geometry4, material4 );
 	scene.add( cube5 );
 	cube5.position.x= (x+cube3.position.x)/2;
-	x=cube5.position.x  
+	x=cube5.position.x
 	cube5.position.y= (y+cube3.position.y)/2;
 	y=cube5.position.y
 	cube5.position.z= (z+cube3.position.z)/2;
-	z=cube5.position.z 
+	z=cube5.position.z
 
    }
    if (point==3){
 	var cube5 = new THREE.Mesh( geometry4, material4 );
 	scene.add( cube5 );
 	cube5.position.x= (x+cube6.position.x)/2;
-	x=cube5.position.x  
+	x=cube5.position.x
 	cube5.position.y= (y+cube6.position.y)/2;
 	y=cube5.position.y
 	cube5.position.z= (z+cube6.position.z)/2;
-	z=cube5.position.z 
+	z=cube5.position.z
   }
   if (point==4){
 	var cube5 = new THREE.Mesh( geometry4, material4 );
 	scene.add( cube5 );
 	cube5.position.x= (x+cube7.position.x)/2;
-	x=cube5.position.x  
+	x=cube5.position.x
 	cube5.position.y= (y+cube7.position.y)/2;
 	y=cube5.position.y
 	cube5.position.z= (z+cube7.position.z)/2;
-	z=cube5.position.z 
+	z=cube5.position.z
   }
 }
-  
+
 
   renderer.render(scene,camera)
 };

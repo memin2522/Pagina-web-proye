@@ -1,64 +1,70 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Basic Three.js App</title>
+    <title>Comparacion planetas</title>
   <style>
       html, body { margin: 0; padding: 0; overflow: hidden; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
+
 </head>
 <header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-  <a class="navbar-brand text-light" href="#" style="width: 250px">Parcial Sistema Solar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-       
-       <li class="nav-item dropdown text-light" style="width: 150px">
-        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-          Ejemplos
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_effects_stereo.html">Ejemplo Vista Burbujas</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_loader_obj.html">Ejemplo Modelo Persona</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_materials_cubemap.html">Ejemplo Caras</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_materials_cubemap_mipmaps.html">Ejemplo Esferas</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_loader_obj_mtl.html">Ejemplo Modelo Vestido</a>
-        </div>
-      </li>
+  <!--INICIO BOTONES -->
 
-       <li class="nav-item dropdown text-light" style="width: 150px">
-        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Ejercicios
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="parcial.html">Parcial Sistema Solar</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/Effects_Model.html">Vista + Modelo</a>
-          <a class="dropdown-item" href="../RV_Memo/examples/webgl_effects_stereo_rotacion.html">Effects 360</a>
-          <a class="dropdown-item" href="Piramide.html">Piramide</a>
-          
-          
-        </div>
-      </li>
+  <div class="container-fluid p-0" >
 
-       <li class="nav-item dropdown text-light" style="width: 150px">
-        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Videos
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="../videos/jamcam.html">JamCam 2020</a>
-          
-          
+      <div class="row justify-content-center">
+        <div class="col">
+
+
+
+      <nav class="navbar navbar-expand navbar-light bg-transparent " >
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center align-items-center" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+
+            <li class="nav-item ">
+              <a class="nav-link" href="../index.html">Inicio</a>
+            </li>
+
+            <li class="nav-item dropdown text-dark" >
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Programacion
+              </a>
+              <div class="dropdown-menu active" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item active" href="parcial.html">Sistema Solar</a>
+                <a class="dropdown-item" href="../ejercicios/Piramide.html">Piramide</a>
+                <a class="dropdown-item  " href="Ciudad/MatrizCiudad.html">Ciudad Procedural</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="../Phaser/index.html">Shoot Them Down</a>
+              </div>
+            </li>
+
+            <li class="nav-item dropdown text-light" >
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Edicion
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="../videos/jamcam.html">JamCam 2020</a>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="../foto/index.html">Fotografias</a>
+            </li>
+
         </div>
-      </li>
-    
-    </div>
+      </div>
+    </nav>
   </div>
-</nav>
+  </div>
+
+  <!--FIN BOTONES -->
 	</header>
 
     <script>
@@ -93,7 +99,7 @@ var textureearth = loader.load("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABA
 material.map = textureearth;
 var earth = new THREE.Mesh( geometry, material );
 scene.add( earth);
-earth.position.x=window.innerWidth/-4 
+earth.position.x=window.innerWidth/-4
 }
 
 function venus(a){
@@ -162,7 +168,7 @@ scene.add( mercurio);
 mercurio.position.x=window.innerWidth/4
 }
 
-//Creacion de la escena    
+//Creacion de la escena
 var scene = new THREE.Scene();
 //Se define el tamaño de la escena al tamaño de la ventana
 var aspect = window.innerWidth / window.innerHeight;
@@ -237,30 +243,30 @@ scene.add(light2);
 
 var render = function () {
   requestAnimationFrame( render );
-  
- 
- 
- 
 
- 
- 
- 
- 
 
- 
 
- 
+
+
+
+
+
+
+
+
+
+
 
 
   renderer.render( scene, camera );
 };
 
 render();
-    
+
 </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
- 
+
   </body>
 </html>
