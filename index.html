@@ -7,6 +7,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css"/>
 
     <title>Proyectos Sergio Reyes</title>
   </head>
@@ -23,20 +25,25 @@
 </header>
 
 <!--INICIO BOTONES -->
-<div class="container-fluid" >
+
+<div class="container-fluid p-0" >
+
+    <div class="row justify-content-center">
+      <div class="col">
 
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-transparent" style="position: absolute; left: 50%; transform: translatex(-50%);">
+
+    <nav class="navbar navbar-expand navbar-light bg-transparent " >
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="collapse navbar-collapse justify-content-center align-items-center" id="navbarNavAltMarkup">
         <div class="navbar-nav">
 
           <li class="nav-item active">
-            <a class="nav-link" href="index.html">Inicio</a>
+            <a class="nav-link" href="index.php">Inicio</a>
           </li>
 
           <li class="nav-item dropdown text-dark" >
@@ -68,15 +75,93 @@
     </div>
   </nav>
 </div>
+</div>
+
+<!--FIN BOTONES -->
 
 
-<footer class="footer">
-  <div class="container-fluid bg-white pt-3 pb-3">
-      <div class="row">
+<div class="row">
+  <div class="col">
+<!--Carousel Wrapper-->
+  <div id="video-carousel-example" class="carousel slide pause bg-dark" data-ride="carousel" data-interval="false">
+<!--Indicators-->
+  <ol class="carousel-indicators">
+    <li data-target="#video-carousel-example" data-slide-to="0" class="active"></li>
+    <li data-target="#video-carousel-example" data-slide-to="1"></li>
+    <li data-target="#video-carousel-example" data-slide-to="2"></li>
 
-      </div>
-    </div>
+  </ol>
+<!--/.Indicators-->
+<!--Slides-->
+<div class="carousel-inner" role="listbox">
+
+<div class="carousel-item active" >
+  <div class="container text-center h-100 d-flex justify-content-center align-items-center">
+    <img src="images/SistemaSolar.jpg" width="1365" height="612" alt="Responsive image">
+  </div>
+  <div class="carousel-caption">
+    <h3 class="h3-responsive">Programacion</h3>
+    <p>Trabajos en Phaser, JavaScript y mas</p>
+  </div>
+</div>
+
+<div class="carousel-item">
+  <div class="container text-center h-100 d-flex justify-content-center align-items-center">
+    <img src="images/JamCam.png" width="1365" height="612" alt="Responsive image">  </div>
+  <div class="carousel-caption">
+    <h3 class="h3-responsive">Edicion</h3>
+    <p>Trabajos de postproduccion</p>
+  </div>
+</div>
+
+<div class="carousel-item">
+  <div class="container text-center h-100 d-flex justify-content-center align-items-center">
+    <img src="foto/Thumb/Portafolio-4.png" width="1365" height="612" alt="Responsive image">  </div>
+  <div class="carousel-caption">
+    <h3 class="h3-responsive">Fotografias</h3>
+    <p>Trabajos de Fotografia</p>
+  </div>
+</div>
+
+
+
+
+</div>
+<!--/.Slides-->
+<!--Controls-->
+<a class="carousel-control-prev" href="#video-carousel-example" role="button" data-slide="prev">
+<span class="carousel-control-prev-icon" ></span>
+<span class="sr-only">Previous</span>
+</a>
+<a class="carousel-control-next" href="#video-carousel-example" role="button" data-slide="next">
+<span class="carousel-control-next-icon" ></span>
+<span class="sr-only">Next</span>
+</a>
+<!--/.Controls-->
+</div>
+<!--Carousel Wrapper-->
+</div>
+</div>
+</div>
+
+
+<footer class="footer"style="position: relative; transform: translatey(0%)">
+  <div class="centerdiv">
+    <a id="footer" href="https://www.facebook.com/profile.php?id=100006448951255&viewas=100000686899395" target="_blank">
+      <i class="fab fa-2x fa-facebook-f"></i>
+    </a>
+
+    <a id="footer" href="https://www.instagram.com/sergioreyes1234/" target="_blank">
+      <i class="fab fa-2x fa-instagram"></i>
+    </a>
+
+    <a id="footer" href="https://github.com/memin2522" target="_blank">
+      <i class="fab fa-2x fa-github"></i>
+    </a>
+  </div>
+
 </footer>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
